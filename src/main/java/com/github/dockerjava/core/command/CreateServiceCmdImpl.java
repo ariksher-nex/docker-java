@@ -2,6 +2,7 @@ package com.github.dockerjava.core.command;
 
 import com.github.dockerjava.api.command.CreateServiceCmd;
 import com.github.dockerjava.api.command.CreateServiceResponse;
+import com.github.dockerjava.api.model.AuthConfig;
 import com.github.dockerjava.api.model.ServiceSpec;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -13,10 +14,12 @@ public class CreateServiceCmdImpl extends AbstrDockerCmd<CreateServiceCmd, Creat
         CreateServiceCmd {
 
     private ServiceSpec serviceSpec;
+    private AuthConfig authConfig;
 
-    public CreateServiceCmdImpl(CreateServiceCmd.Exec exec, ServiceSpec serviceSpec) {
+    public CreateServiceCmdImpl(CreateServiceCmd.Exec exec, AuthConfig authConfig, ServiceSpec serviceSpec) {
         super(exec);
         checkNotNull(serviceSpec, "serviceSpec was not specified");
+        withAuthConfig(authConfig);
         withServiceSpec(serviceSpec);
     }
 
@@ -26,9 +29,19 @@ public class CreateServiceCmdImpl extends AbstrDockerCmd<CreateServiceCmd, Creat
     }
 
     @Override
+    public AuthConfig getAuthConfig() {
+        return authConfig;
+    }
+
+    @Override
     public CreateServiceCmd withServiceSpec(ServiceSpec serviceSpec) {
         checkNotNull(serviceSpec, "serviceSpec was not specified");
         this.serviceSpec = serviceSpec;
+        return this;
+    }
+
+    public CreateServiceCmdImpl withAuthConfig(AuthConfig authConfig) {
+        this.authConfig = authConfig;
         return this;
     }
 }

@@ -551,7 +551,7 @@ public class DockerClientImpl implements Closeable, DockerClient {
 
     @Override
     public CreateServiceCmd createServiceCmd(ServiceSpec serviceSpec) {
-        return new CreateServiceCmdImpl(getDockerCmdExecFactory().createCreateServiceCmdExec(), serviceSpec);
+        return new CreateServiceCmdImpl(getDockerCmdExecFactory().createCreateServiceCmdExec(), authConfig(), serviceSpec);
     }
 
     @Override

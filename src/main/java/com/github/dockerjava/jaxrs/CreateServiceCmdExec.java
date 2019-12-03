@@ -25,7 +25,7 @@ public class CreateServiceCmdExec extends AbstrSyncDockerCmdExec<CreateServiceCm
         WebTarget webResource = getBaseResource().path("/services/create");
 
         LOGGER.trace("POST: {} ", webResource);
-        return webResource.request().accept(MediaType.APPLICATION_JSON)
+        return resourceWithOptionalAuthConfig(command.getAuthConfig(), webResource.request()).accept(MediaType.APPLICATION_JSON)
                 .post(entity(command.getServiceSpec(), MediaType.APPLICATION_JSON), CreateServiceResponse.class);
     }
 }
